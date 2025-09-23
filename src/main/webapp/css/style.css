@@ -1,0 +1,118 @@
+html,body{
+    height: 100%;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right,#4e54c8,#8594fb);
+    color: white;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main{
+    flex: 1;
+}
+
+footer{
+    margin-top: auto;
+}
+
+.hero{
+    text-align: center;
+    margin-top: 80px;
+}
+
+.hero h1{
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.hero p{
+    font-size: 1.25rem;
+    margin-top: 15px;
+}
+
+.btn-cta{
+    background-color: white;
+    color: #4e54c8;
+    font-weight: bold;
+    padding: 12px 30px;
+    border-radius: 30px;
+}
+
+.btn-cta:hover{
+    background-color: white;
+    color: #2c2c84;
+}
+
+.feature-card{
+    margin-top: 80px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 25px;
+    border-radius: 30px;
+    backdrop-filter: blur(10px);
+}
+
+.login-container{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-card{
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+    padding: 30px;
+    width: 100%;
+    max-width: 400px;
+    color: white;
+}
+
+.form-control{
+    background-color: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+}
+
+.form-control::placeholder{
+    color: #ddd;
+}
+
+.form-select{
+    background-color: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: #ddd;
+}
+
+.form-select option {
+    color: black;
+
+}
+
+.btn-login{
+    background-color: #ffffff;
+    color: #4e54c8;
+    font-weight: bold;
+    border-radius: 30px;
+    width: 100%;
+}
+.btn-login:hover{
+    color: #2c2c84;
+    background-color: #e2e2ff;
+}
+
+.job-form-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 25px;
+    backdrop-filter: blur(50px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+
