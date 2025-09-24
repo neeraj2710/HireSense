@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalJavaFormatterSettings">
+    <option name="enabled" value="true" />
+    <option name="testCode" value="package tech.dolch.formatting;&#10;&#10;import static java.util.function.Function.identity;&#10;import static java.util.stream.Collectors.toUnmodifiableMap;&#10;&#10;import java.util.Arrays;&#10;import java.util.Map;&#10;&#10;public class TestFormatting {&#10;&#10;  private static final int[] INTS = {0, 2, 3};&#10;&#10;  private enum State {&#10;    READY,&#10;    PROGRESSING,&#10;    DONE&#10;  }&#10;&#10;  public int[] topKFrequent(final int[] nums, int k) {&#10;    return Arrays.stream(nums).boxed().collect(toUnmodifiableMap(identity(), v -&gt; 1, Integer::sum)).entrySet().stream()&#10;        .sorted(Map.Entry.&lt;Integer, Integer&gt;comparingByValue().reversed())&#10;        .mapToInt(Map.Entry::getKey)&#10;        .limit(k)&#10;        .toArray();&#10;  }&#10;}&#10;" />
+  </component>
+</project>

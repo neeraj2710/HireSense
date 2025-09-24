@@ -21,7 +21,7 @@
     <div class="login-card shadow">
         <h3 class="text-center">Create Your Account</h3>
 
-        <form action="#">
+        <form action="OTPVerificationServlet" method="post">
             <div class="mb-3">
                 <input type="text" name="name" class="form-control" placeholder="Full Name" required>
             </div>
