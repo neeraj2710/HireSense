@@ -42,7 +42,7 @@
         </form>
 
         <div class="text-center mt-3">
-            <small>Alredy have an account? <a href="#" class="text-warning">Login</a></small>
+            <small>Already have an account? <a href="#" class="text-warning">Login</a></small>
         </div>
 
     </div>

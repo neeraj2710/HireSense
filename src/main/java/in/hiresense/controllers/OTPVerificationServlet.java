@@ -7,6 +7,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 
 import javax.mail.MessagingException;
 import java.io.IOException;
@@ -25,22 +27,38 @@ public class OTPVerificationServlet extends HttpServlet {
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String recipient = request.getParameter("email");
-        int otp = new Random().nextInt(900000) + 100000;
+
+        HttpSession session = request.getSession();
+
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        String role = request.getParameter("role");
+        String otp = String.valueOf(new Random().nextInt(900000) + 100000);
+        String appName = (String) super.getServletContext().getAttribute("appName");
+
+        session.setAttribute("regName", name);
+        session.setAttribute("regOtp", "otp");
+        session.setAttribute("regEmail", email);
+        session.setAttribute("regPassword", password);
+        session.setAttribute("regRole", role);
+
         String emailBody = "Hello," +
                 "\n" +
-                "Your HireSense verification code is : " + otp +
+                "Your "+appName+" verification code is : " + otp +
                 "\n" +
                 "If you did not request this code, please ignore this email or contact us at "+
                 AppConfig.getProperty("mail.username") +
                 "\n" +
                 "Cheers," +
                 "\n" +
-                "The HireSense Team";
+                "The "+appName+" Team";
+
         try {
-            MailUtil.sendTextEmail(recipient, "Email Verification", emailBody);
+            MailUtil.sendTextEmail(email, "Email Verification", emailBody);
+            response.sendRedirect("register.jsp?showOtp=true");
         } catch (MessagingException e) {
-            System.out.println("Error in sending mail : "+e.getMessage());
+            throw new ServletException("Error in sending mail : "+e.getMessage());
         }
     }
 
