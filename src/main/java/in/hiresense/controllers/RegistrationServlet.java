@@ -26,7 +26,9 @@ public class RegistrationServlet extends HttpServlet {
 
         String inputOtp = request.getParameter("otp");
         String actualOtp = (String) session.getAttribute("regOtp");
-
+        System.out.println(actualOtp);
+        System.out.println(inputOtp);
+        System.out.println(inputOtp.equals(actualOtp));
         if(inputOtp.equals(actualOtp)){
             UserPojo user = new UserPojo();
 

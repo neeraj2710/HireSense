@@ -38,7 +38,7 @@ public class OTPVerificationServlet extends HttpServlet {
         String appName = (String) super.getServletContext().getAttribute("appName");
 
         session.setAttribute("regName", name);
-        session.setAttribute("regOtp", "otp");
+        session.setAttribute("regOtp", otp);
         session.setAttribute("regEmail", email);
         session.setAttribute("regPassword", password);
         session.setAttribute("regRole", role);

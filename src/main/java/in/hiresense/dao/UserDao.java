@@ -13,6 +13,7 @@ import java.util.List;
 public class UserDao {
 
     public static int registerUser(UserPojo user)throws Exception{
+        System.out.println(user);
         Connection conn;
         PreparedStatement ps = null;
         int count = 0;
@@ -25,6 +26,7 @@ public class UserDao {
             ps.setString(3, user.getPassword());
             ps.setString(4, user.getRole());
             count = ps.executeUpdate();
+            System.out.println("Data added");
         }finally{
             if(ps != null) ps.close();
             return count;
