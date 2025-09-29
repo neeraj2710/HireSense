@@ -1,4 +1,5 @@
 package in.hiresense.controllers;
+import in.hiresense.dao.UserDao;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -20,7 +21,28 @@ public class LoginServlet extends HttpServlet {
     }
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-    
+        HttpSession session = request.getSession();
+
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+
+        System.out.println(email+" "+password);
+
+        try{
+            String name = UserDao.verifyUser(email, password);
+            System.out.println(name);
+            if(name != null){
+                session.setAttribute("currUser", email);
+                session.setAttribute("currUserName", name);
+                response.sendRedirect("userDashboard.jsp");
+            }else {
+                response.sendRedirect("login.jsp?invalidCredentials=true");
+            }
+
+        } catch (Exception e) {
+            throw new ServletException("Error in LoginServlet");
+        }
+
     }
     
 }

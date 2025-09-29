@@ -19,11 +19,15 @@
 <div class="login-card shadow">
     <h3 class="text-center mb-4">Welcome Back</h3>
 
-    <form action="#">
-
+    <form action="LoginServlet" method="post">
+        <%
+            if("true".equals(request.getParameter("invalidCredentials"))){
+        %>
         <div class="alert alert-danger">Please check login cridentials</div>
+        <%
+            }
+        %>
 
-        <div class="alert alert-success">Registration successfull. Please login</div>
 
         <div class="mb-3">
             <input type="email" name="email" class="form-control" placeholder="email" required>

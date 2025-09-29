@@ -12,6 +12,28 @@ import java.util.List;
 
 public class UserDao {
 
+    public static String verifyUser(String email,String password)throws Exception{
+        Connection conn;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String name = null;
+        try{
+            conn = DBConnection.getConnection();
+            String qry = "SELECT * FROM users WHERE email = ? AND password = ? AND status = 'active'";
+            ps = conn.prepareStatement(qry);
+            ps.setString(1, email);
+            ps.setString(2, password);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                System.out.println(rs.getString("name"));
+                name = rs.getString("name");
+            }
+        } finally {
+            if(ps != null) ps.close();
+            return name;
+        }
+    }
+
     public static int registerUser(UserPojo user)throws Exception{
         System.out.println(user);
         Connection conn;

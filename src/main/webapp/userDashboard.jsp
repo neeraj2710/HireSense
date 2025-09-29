@@ -9,7 +9,7 @@
 <%@include file="includes/header.jsp"%>
 
 <main class="container py-5 flex-grow-1" >
-    <h2 class="mb-4">Welcome Neeraj</h2>
+    <h2 class="mb-4">Welcome <%= session.getAttribute("currUserName")%></h2>
 
     <!-- filter code starts -->
     <form action="#">
