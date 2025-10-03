@@ -11,13 +11,14 @@
     <title><%= application.getAttribute("appName")%></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="css/style.css" rel="stylesheet">
+    <script>
+        function showSpinner(){
+            document.querySelector(".btn-login").disabled=true;
+            document.getElementById("LoadingSpinner").classList.remove("d-none");
+        }
+    </script>
 </head>
-<script>
-    function showSpinner(){
-        document.querySelector(".btn-login").disabled=true;
-        document.getElementById("LoadingSpinner").classList.remove("d-none");
-    }
-</script>
+
 <body>
 <%@include file="includes/header.jsp"%>
 
