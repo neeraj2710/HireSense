@@ -1,5 +1,6 @@
 package in.hiresense.controllers;
 import in.hiresense.dao.UserDao;
+import in.hiresense.pojo.UserPojo;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -21,7 +22,6 @@ public class LoginServlet extends HttpServlet {
     }
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        HttpSession session = request.getSession();
 
         String email = request.getParameter("email");
         String password = request.getParameter("password");
@@ -29,18 +29,29 @@ public class LoginServlet extends HttpServlet {
         System.out.println(email+" "+password);
 
         try{
-            String name = UserDao.verifyUser(email, password);
-            System.out.println(name);
-            if(name != null){
-                session.setAttribute("currUser", email);
-                session.setAttribute("currUserName", name);
-                response.sendRedirect("userDashboard.jsp");
+            UserPojo user  = UserDao.getUserByEmail(email);
+            if(user != null && user.getPassword().equals(password) && user.getStatus().equals("active")){
+                HttpSession session = request.getSession();
+                session.setAttribute("userId", user.getId());
+                session.setAttribute("userName", user.getName());
+                session.setAttribute("userRole", user.getRole());
+                switch (user.getRole()){
+                    case "admin":
+                        response.sendRedirect("adminPanel.jsp");
+                        break;
+                    case "employer":
+                        response.sendRedirect("employerDashboard.jsp");
+                        break;
+                    default:
+                        response.sendRedirect("userDashboard.jsp");
+                }
             }else {
-                response.sendRedirect("login.jsp?invalidCredentials=true");
+                request.setAttribute("error", "Invalid credentials or account is blocked");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
             }
 
         } catch (Exception e) {
-            throw new ServletException("Error in LoginServlet");
+            throw new ServletException("Error in LoginServlet : "+e.getMessage());
         }
 
     }

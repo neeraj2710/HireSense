@@ -8,17 +8,23 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Employer Dashboard | <%=application.getAttribute("appName")%></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
 <%@include file="includes/header.jsp"%>
-
+<%
+    Integer userId = (Integer) session.getAttribute("userId");
+    if(userId == null){
+        response.sendRedirect("login.jsp");
+        return;
+    }
+%>
 <main class="container py-5">
-    <h2 class="mb-4">Welcome, Neeraj Wadhwaney 🧑‍💼</h2>
+    <h2 class="mb-4">Welcome, <%= session.getAttribute("userName")%> 🧑‍💼</h2>
 
-        <!-- Post job form starts -->
+        <!-- Post-job form starts -->
 
         <div class="p-4 mb-4 job-form-card">
             <h5>📢 Post a new job</h5>
@@ -41,7 +47,7 @@
                     <div class="mb-3">
                         <select name="location" class="form-select" id="">
                             <option value="" disabled selected>Select Location</option>
-                            <option value="banglore">Banglore</option>
+                            <option value="Bangalore">Bangalore</option>
                             <option value="mumbai">Mumbai</option>
                             <option value="pune">Pune</option>
                             <option value="delhi">Delhi</option>

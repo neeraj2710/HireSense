@@ -37,7 +37,7 @@
             %>
                 <!-- employee links -->
                 <li class="nav-item">
-                    <a href="./employeeDashboard.jsp" class="nav-link">Dashboard</a>
+                    <a href="../employerDashboard.jsp" class="nav-link">Dashboard</a>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">Logout</a>

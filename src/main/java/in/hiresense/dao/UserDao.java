@@ -55,7 +55,7 @@ public class UserDao {
         }
     }
 
-    private static UserPojo getUserByEmail(String email)throws Exception{
+    public static UserPojo getUserByEmail(String email)throws Exception{
         Connection conn;
         PreparedStatement ps = null;
         ResultSet rs = null;
