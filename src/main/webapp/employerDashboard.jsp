@@ -14,13 +14,7 @@
 </head>
 <body>
 <%@include file="includes/header.jsp"%>
-<%
-    Integer userId = (Integer) session.getAttribute("userId");
-    if(userId == null){
-        response.sendRedirect("login.jsp");
-        return;
-    }
-%>
+
 <main class="container py-5">
     <h2 class="mb-4">Welcome, <%= session.getAttribute("userName")%> 🧑‍💼</h2>
 

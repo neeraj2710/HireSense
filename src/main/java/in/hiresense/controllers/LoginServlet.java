@@ -37,13 +37,13 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("userRole", user.getRole());
                 switch (user.getRole()){
                     case "admin":
-                        response.sendRedirect("adminPanel.jsp");
+                        response.sendRedirect("AdminPanelServlet");
                         break;
                     case "employer":
-                        response.sendRedirect("employerDashboard.jsp");
+                        response.sendRedirect("EmployerDashboardServlet");
                         break;
                     default:
-                        response.sendRedirect("userDashboard.jsp");
+                        response.sendRedirect("UserDashboardServlet");
                 }
             }else {
                 request.setAttribute("error", "Invalid credentials or account is blocked");
