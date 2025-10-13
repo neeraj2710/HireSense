@@ -63,7 +63,7 @@ public class ApplicationDao {
         ResultSet rs = null;
         List<ApplicationPojo> appList = new ArrayList<>();
         try {
-            String qry = "SELECT * FROM applications WHERE job_id = ? AND status = ?";
+            String qry = "SELECT * FROM applications WHERE job_id = ? AND status = ? ORDER BY score";
             conn = DBConnection.getConnection();
             ps = conn.prepareStatement(qry);
             ps.setInt(1, jobId);
