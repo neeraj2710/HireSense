@@ -1,4 +1,5 @@
-<%--
+<%@ page import="in.hiresense.pojo.JobPojo" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: neera
   Date: 9/12/2025
@@ -14,7 +15,13 @@
 </head>
 <body>
 <%@include file="includes/header.jsp"%>
+<%
 
+    if(session == null || session.getAttribute("userId") == null || !session.getAttribute("userRole").equals("employer")){
+        response.sendRedirect("login.jsp");
+        return;
+    }
+%>
 <main class="container py-5">
     <h2 class="mb-4">Welcome, <%= session.getAttribute("userName")%> 🧑‍💼</h2>
 
@@ -23,7 +30,7 @@
         <div class="p-4 mb-4 job-form-card">
             <h5>📢 Post a new job</h5>
 
-                <form action="#" method="post">
+                <form action="PostJobServlet" method="post">
                     <div class="mb-3">
                         <input type="text" class="form-control" placeholder="Job title" name="title" required>
                     </div>
@@ -76,27 +83,27 @@
                 </form>
         </div>
 
-        <!-- Post job form ends -->
+        <!-- Post-job form ends -->
 
         <!--Search and filter starts  -->
 
-        <form action="#" method="post">
+        <form action="EmployerDashboardServlet" method="post">
             <div class="row g-2">
                 <div class="col-md-4">
-                    <input type="text" name="search" class="form-control" placeholder="Search by title" required>
+                    <input type="text" name="search" class="form-control" placeholder="Search by title" value="${param.search}" required>
                 </div>
                 <div class="col-md-3">
-                    <select name="status" class="form-select" id="">
+                    <select name="status" class="form-select" id="" >
                         <option value="" disabled selected>Select Status</option>
-                        <option value="active">Active</option>
-                        <option value="inactive">Inactive</option>
+                        <option value="active" ${param.status == 'active' ? 'selected' : ''}>Active</option>
+                        <option value="inactive" ${param.status == 'inactive' ? 'selected' : ''}>Inactive</option>
                     </select>
                 </div>
                 <div class="col-md-3">
                     <select name="sort" class="form-select" id="">
                         <option value="" disabled selected>Sort by applicants</option>
-                        <option value="asc">Least to most</option>
-                        <option value="desc">Most to least</option>
+                        <option value="asc" ${param.sort == 'asc' ? 'selected' : ''}>Least to most</option>
+                        <option value="desc" ${param.sort == 'desc' ? 'selected' : ''}>Most to least</option>
                     </select>
                 </div>
                 <div class="col-md-2">
@@ -106,7 +113,9 @@
         </form>
 
         <!-- Search and filter ends -->
-
+<%
+    List<JobPojo> jobList =  (List<JobPojo>) request.getAttribute("jobList");
+%>
         <!-- manage job listing table -->
         <div class="card p-5 mb-4 mt-4">
             <h5>📃 Manage Job Listing</h5>
@@ -114,25 +123,38 @@
                 <thead>
                 <tr>
                     <th>Job title</th>
-                    <th>Company</th>
                     <th>Applicants</th>
+                    <th>status</th>
                     <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>SDE</td>
-                    <td>Google</td>
-                    <td>1098</td>
-                    <td>
-                        <a href="#" class="btn btn-danger">Remove</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="5" class="text-center text-warning">
-                        No Job Listings found
-                    </td>
-                </tr>
+                <%
+                    for(int i = 0 ; i < jobList.size() ; i++){
+                        JobPojo job = jobList.get(i);
+                %>
+                    <tr>
+                        <td><%=job.getTitle()%></td>
+                        <td><%=job.getApplicantCount()%></td>
+                        <td><%=job.getStatus()%></td>
+                        <td>
+                            <a href="ViewApplicantsServlet" class="btn btn-primary">View</a>
+                            <%
+                                if(job.getStatus().equals("active")){
+                            %>
+                            <a href="ToggleJobStatusServlet?jobId=<%=job.getId()%>" class="btn btn-danger">Deactivate</a>
+                            <%
+                                }else{
+                            %>
+                            <a href="ToggleJobStatusServlet?jobId=<%=job.getId()%>" class="btn btn-success">Activate</a>
+                            <%
+                                }
+                            %>
+                        </td>
+                    </tr>
+                <%
+                    }
+                %>
                 </tbody>
             </table>
         </div>

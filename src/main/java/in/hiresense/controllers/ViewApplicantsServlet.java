@@ -27,7 +27,7 @@ public class ViewApplicantsServlet extends HttpServlet {
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         HttpSession session = request.getSession(false);
-        if(session == null || session.getAttribute("userId") == null || !session.getAttribute("role").equals("employer")){
+        if(session == null || session.getAttribute("userId") == null || !session.getAttribute("userRole").equals("employer")){
             response.sendRedirect("login.jsp");
             return;
         }

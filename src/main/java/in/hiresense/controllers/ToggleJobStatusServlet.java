@@ -1,17 +1,15 @@
 package in.hiresense.controllers;
 import in.hiresense.dao.JobDao;
-import in.hiresense.pojo.JobPojo;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
 import java.io.IOException;
 
-@WebServlet(name = "PostJobServlet", value = "/PostJobServlet")
-public class PostJobServlet extends HttpServlet {
+@WebServlet(name = "ToggleJobStatusServlet", value = "/ToggleJobStatusServlet")
+public class ToggleJobStatusServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request,response);
@@ -29,36 +27,15 @@ public class PostJobServlet extends HttpServlet {
             return;
         }
 
-        int userId = (Integer) session.getAttribute("userId");
-        String title = request.getParameter("title");
-        String description = request.getParameter("description");
-        String skills = request.getParameter("skills");
-        String company = request.getParameter("company");
-        String location = request.getParameter("location");
-        String experience = request.getParameter("experience");
-        String packageLpa = request.getParameter("packageLpa");
-        int vacancies = Integer.parseInt(request.getParameter("vacancies"));
-
-        JobPojo job = new JobPojo();
-        job.setTitle(title);
-        job.setDescription(description);
-        job.setSkills(skills);
-        job.setCompany(company);
-        job.setLocation(location);
-        job.setExperience(experience);
-        job.setPackageLpa(packageLpa);
-        job.setVacancies(vacancies);
-        job.setEmployerId(userId);
+        int jobId = Integer.parseInt(request.getParameter("jobId"));
 
         try{
-            boolean result = JobDao.postJob(job);
-            if(result) response.sendRedirect("EmployerDashboardServlet?success=1");
-            else response.sendRedirect("EmployerDashboardServlet?error=1");
+            JobDao.toggleJobStatus(jobId);
+            response.sendRedirect("EmployerDashboardServlet");
         } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect("EmployerDashboardServlet?error=1");
         }
-
     }
     
 }

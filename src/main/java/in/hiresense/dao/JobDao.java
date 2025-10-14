@@ -159,6 +159,7 @@ public class JobDao {
             String qry = "update jobs set status = case when status = 'active' then 'inactive' else 'active' end where id=?";
             conn = DBConnection.getConnection();
             ps = conn.prepareStatement(qry);
+            ps.setInt(1, jobId);
             ps.executeUpdate();
         }finally {
             if (ps != null) ps.close();
