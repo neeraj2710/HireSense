@@ -16,7 +16,6 @@
 <body>
 <%@include file="includes/header.jsp"%>
 <%
-
     if(session == null || session.getAttribute("userId") == null || !session.getAttribute("userRole").equals("employer")){
         response.sendRedirect("login.jsp");
         return;
@@ -115,11 +114,12 @@
         <!-- Search and filter ends -->
 <%
     List<JobPojo> jobList =  (List<JobPojo>) request.getAttribute("jobList");
+    if(jobList != null && !jobList.isEmpty()){
 %>
         <!-- manage job listing table -->
-        <div class="card p-5 mb-4 mt-4">
-            <h5>📃 Manage Job Listing</h5>
-            <table class="table">
+        <div class="card bg-glass p-5 mb-4 mt-4">
+            <h5>📃 <%=jobList.get(0).getCompany()%>'s Posted Jobs</h5>
+            <table class="table text-white mt-3">
                 <thead>
                 <tr>
                     <th>Job title</th>
@@ -130,28 +130,22 @@
                 </thead>
                 <tbody>
                 <%
-                    for(int i = 0 ; i < jobList.size() ; i++){
-                        JobPojo job = jobList.get(i);
+                    for(JobPojo job : jobList){
                 %>
                     <tr>
                         <td><%=job.getTitle()%></td>
                         <td><%=job.getApplicantCount()%></td>
-                        <td><%=job.getStatus()%></td>
+                        <td><%=job.getStatus().toUpperCase()%></td>
                         <td>
-                            <a href="ViewApplicantsServlet" class="btn btn-primary">View</a>
-                            <%
-                                if(job.getStatus().equals("active")){
-                            %>
-                            <a href="ToggleJobStatusServlet?jobId=<%=job.getId()%>" class="btn btn-danger">Deactivate</a>
-                            <%
-                                }else{
-                            %>
-                            <a href="ToggleJobStatusServlet?jobId=<%=job.getId()%>" class="btn btn-success">Activate</a>
-                            <%
-                                }
-                            %>
+                            <a href="ViewApplicantsServlet?jobId=<%=job.getId()%>" class="btn btn-sm btn-primary">View</a>
+                            <a href="ToggleJobStatusServlet?jobId=<%=job.getId()%>" class="btn btn-sm <%=job.getStatus().equals("active")?"btn-warning":"btn-success"%>"><%=job.getStatus().equals("active")?"Deactivate":"Activate"%></a>
                         </td>
                     </tr>
+                <%
+                    }
+                    }else {
+                %>
+
                 <%
                     }
                 %>
