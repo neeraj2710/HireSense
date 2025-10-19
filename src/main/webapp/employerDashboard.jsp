@@ -12,6 +12,7 @@
     <title>Employer Dashboard | <%=application.getAttribute("appName")%></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="css/style.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 <%@include file="includes/header.jsp"%>
@@ -89,7 +90,7 @@
         <form action="EmployerDashboardServlet" method="post">
             <div class="row g-2">
                 <div class="col-md-4">
-                    <input type="text" name="search" class="form-control" placeholder="Search by title" value="${param.search}" required>
+                    <input type="text" name="search" class="form-control" placeholder="Search by title" value="${param.search}">
                 </div>
                 <div class="col-md-3">
                     <select name="status" class="form-select" id="" >
@@ -143,19 +144,51 @@
                     </tr>
                 <%
                     }
-                    }else {
-                %>
-
-                <%
-                    }
                 %>
                 </tbody>
             </table>
         </div>
+        <%
+            }else {
+        %>
+            <p class="text-center">No Jobs Posted</p>
+        <%
+            }
+        %>
         <!-- manage job listing table ends -->
 </main>
-
+<%
+    String success = request.getParameter("success");
+    if("1".equals(success)){
+%>
+<script>
+    Swal.fire({
+        title: "Job Posted!",
+        text: "Your job has been successfully posted!",
+        timer:2000,
+        icon: "success",
+        showConfirmButton: false
+    });
+</script>
+<%
+    }
+    String error = request.getParameter("error");
+    if("1".equals(error)){
+%>
+<script>
+    Swal.fire({
+        title: "Failed!",
+        text: "Something went wrong! Please try again",
+        timer:2000,
+        icon: "error",
+        confirmButtonText: "Okay"
+    });
+</script>
+<%
+    }
+%>
 <%@include file="includes/footer.jsp"%>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -28,7 +28,7 @@ public class JobDao {
             ps.setString(7, job.getPackageLpa());
             ps.setInt(8, job.getVacancies());
             ps.setInt(9, job.getEmployerId());
-            res = ps.executeUpdate() > 1;
+            res = ps.executeUpdate() > 0;
         }finally{
             if(ps != null) ps.close();
             return res;
