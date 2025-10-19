@@ -138,8 +138,14 @@
                         <td><%=job.getApplicantCount()%></td>
                         <td><%=job.getStatus().toUpperCase()%></td>
                         <td>
-                            <a href="ViewApplicantsServlet?jobId=<%=job.getId()%>" class="btn btn-sm btn-primary">View</a>
-                            <a href="ToggleJobStatusServlet?jobId=<%=job.getId()%>" class="btn btn-sm <%=job.getStatus().equals("active")?"btn-warning":"btn-success"%>"><%=job.getStatus().equals("active")?"Deactivate":"Activate"%></a>
+                            <a href="ViewApplicantsServlet?jobId=<%=job.getId()%>"
+                               class="btn btn-sm btn-primary">
+                                View
+                            </a>
+                            <a href="ToggleJobStatusServlet?jobId=<%=job.getId()%>"
+                               class="btn btn-sm <%=job.getStatus().equals("active")?"btn-warning":"btn-success"%>">
+                                <%=job.getStatus().equals("active")?"Deactivate":"Activate"%>
+                            </a>
                         </td>
                     </tr>
                 <%
