@@ -165,7 +165,7 @@
     Swal.fire({
         title: "Job Posted!",
         text: "Your job has been successfully posted!",
-        timer:2000,
+        timer: 2000,
         icon: "success",
         showConfirmButton: false
     });
@@ -179,7 +179,6 @@
     Swal.fire({
         title: "Failed!",
         text: "Something went wrong! Please try again",
-        timer:2000,
         icon: "error",
         confirmButtonText: "Okay"
     });
