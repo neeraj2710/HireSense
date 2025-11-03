@@ -11,6 +11,21 @@ import java.util.List;
 
 public class ResumeAnalysisLogDao {
 
+    public static void saveLog(int userId, String resultJson)throws Exception{
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try{
+            conn = DBConnection.getConnection();
+            ps = conn.prepareStatement("insert into resume_analysis_logs(user_id,result_json)values (?,?)");
+            ps.setInt(1, userId);
+            ps.setString(2, resultJson);
+            ps.executeUpdate();
+        }finally {
+            if(ps!= null)ps.close();;
+        }
+
+    }
+
     public static List<ResumeAnalysisLogsPojo> getLogsByUser(int userId) throws Exception{
         Connection conn = null;
         PreparedStatement ps = null;
