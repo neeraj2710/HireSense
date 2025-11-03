@@ -12,9 +12,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class AffindaAPI {
     private static final String API_KEY = AppConfig.getProperty("api.key");
@@ -159,6 +157,23 @@ public class AffindaAPI {
             e.printStackTrace();
         }
         return skills;
+    }
+
+    public static int calculateMatchScore(String jobSkillsCsv, List<String> resumeSkills){
+        if(resumeSkills == null || resumeSkills.isEmpty()) return 0;
+
+        String[] jobSkills = jobSkillsCsv.split(" ");
+        Set<String> required = new HashSet<>();
+        for(String s : jobSkills){
+            required.add(s.trim().toLowerCase());
+        }
+
+        int matched = 0;
+        for(String r : resumeSkills){
+            if(required.contains(r.toLowerCase())) matched++;
+        }
+
+        return (int) ((matched*100)/required.size());
     }
 
 }
