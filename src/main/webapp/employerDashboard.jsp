@@ -61,7 +61,9 @@
                         <select name="experience" class="form-select" id="">
                             <option value="" disabled selected>Select Experience</option>
                             <option value="fresher">Fresher</option>
-                            <option value="1-3 years">1-3 Years </option>
+                            <option value="0-1 years">0-1 Years</option>
+                            <option value="1-2 years">1-2 Years </option>
+                            <option value="2-3 years">2-3 Years</option>
                             <option value="3-5 years">3-5 Years</option>
                             <option value="5+ years">5+ Years</option>
                         </select>
