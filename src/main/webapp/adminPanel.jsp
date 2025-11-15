@@ -18,7 +18,7 @@
 <main class="container py-5">
     <h2 class="mb-4">👑 Admin Dashboard</h2>
 
-    <!-- filter section starts -->
+    <!-- the filter section starts -->
     <div class="p-4 mb-4">
         <h5>Filter Users</h5>
         <form action="#" method="get">

@@ -1,6 +1,7 @@
 package in.hiresense.controllers;
 import in.hiresense.dao.ResumeAnalysisLogDao;
 import in.hiresense.pojo.ResumeAnalysisLogsPojo;
+import in.hiresense.utils.AffindaAPI;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -79,7 +80,17 @@ public class UploadResumeServlet extends HttpServlet {
         }
 
         //API call
+        try{
+            String jsonResult = AffindaAPI.analyzeResume(resumeFile);
+            JSONObject result = new JSONObject(jsonResult);
+            result.getJSONObject("data").put("resumePath", resumeFile.getAbsolutePath());
 
+            ResumeAnalysisLogDao.saveLog(userId, result.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        response.sendRedirect("UserDashboardServlet");
 
 
     }
