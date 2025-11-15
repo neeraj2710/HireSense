@@ -15,7 +15,10 @@ import java.nio.file.Files;
 import java.util.*;
 
 public class AffindaAPI {
+
     private static final String API_KEY = AppConfig.getProperty("api.key");
+
+
     public static String analyzeResume(File resumeFile) throws IOException{
         String boundary = "----WebKitFormBoundary" + UUID.randomUUID();
         String LINE_FEED = "\r\n";

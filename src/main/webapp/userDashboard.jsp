@@ -137,6 +137,7 @@
                         class="btn btn-outline-primary btn-sm mt-2 small"
                         data-bs-toggle="modal"
                         data-bs-target="#uploadresume"
+                        onclick="openResumePopup(<%=job.getId()%>, <%=job.getScore()%>, '<%=job.getSkills().replace("'", "\\'")%>"
                 >
                     Apply Now
                 </button>
@@ -215,49 +216,33 @@
     </div>
     <!-- view job details popup ends -->
 
-    <!-- resume upload popup starts -->
-    <div class="modal fade" id="uploadresume">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <form
-                    action="#"
-                    method="post"
-                    class="modal-content bg-dark text-white"
-            >
+    <!-- Resume Upload Modal -->
+    <div class="modal fade" id="resumeModal" tabindex="-1"
+         aria-labelledby="resumeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <form id="resumeForm" method="post" enctype="multipart/form-data"
+                  action="UploadResumeServlet"
+                  class="modal-content bg-dark text-white">
                 <div class="modal-header">
-                    <h5>Upload Resume</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    <h5 class="modal-title" id="resumeModalLabel">📄 Upload Resume</h5>
+                    <button type="button" class="btn-close btn-close-white"
+                            data-bs-dismiss="modal"></button>
                 </div>
-
                 <div class="modal-body">
-                    <input type="hidden" name="jobId" id="modalJobId"/>
-                    <input type="hidden" name="skills" id="modalSkills"/>
-                    <label for="resumeFile" class="form-label">Upload Resume</label>
-                    <input
-                            type="file"
-                            name="resume"
-                            id="resumeFile"
-                            class="form-control"
-                            accept=".pdf"
-                            required
-                    />
+                    <input type="hidden" name="jobId" id="modalJobId"> <input
+                        type="hidden" name="skills" id="modalSkills"> <label
+                        for="resumeFile" class="form-label">Upload Resume (PDF)</label> <input
+                        type="file" name="resume" id="resumeFile" class="form-control"
+                        accept=".pdf" required />
                 </div>
-
                 <div class="modal-footer justify-content-between">
-                    <button type="submit" class="btn btn-success">
-                        Continue
-                    </button>
-                    <button
-                            type="submit"
-                            class="btn btn-secondary"
-                            data-bs-dismiss="modal"
-                    >
-                        Cancel
-                    </button>
+                    <button type="submit" class="btn btn-success">Continue</button>
+                    <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">Cancel</button>
                 </div>
             </form>
         </div>
     </div>
-    <!-- resume upload popup ends -->
 
 
 </main>
@@ -266,5 +251,61 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
+<script>
+<%
+    if(request.getParameter("applied") != null){
+
+%>
+    Swal.fire({icon:'success',title:'Applied Successfully',showConfirmButton:false,timer:1500})
+<%
+    }
+%>
+function openResumePopup(jobId, score, skills) {
+    const resumeUploaded =<%=request.getAttribute("resumeUploaded")%>;
+    if (resumeUploaded) {
+        Swal.fire({ title: "Apply for this job?", icon:
+                "question", showCancelButton: true, confirmButtonText: "Yes, Apply",
+            cancelButtonText: "Cancel" })
+            .then((result) => {
+                if(result.isConfirmed) {
+                    const form = document.createElement("form");
+                    form.method = "POST";
+                    form.action = "ApplyJobServlet";
+                    const input1 =document.createElement("input");
+                    input1.type = "hidden";
+                    input1.name ="jobId";
+                    input1.value = jobId;
+                    form.appendChild(input1);
+                    const input2 =document.createElement("input");
+                    input2.type = "hidden";
+                    input2.name ="score";
+                    input2.value = score;
+                    form.appendChild(input2);
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+            });
+    } else {
+        document.getElementById("modalJobId").value = jobId;
+        document.getElementById("modalSkills").value = skills;
+        document.getElementById("resumeFile").value = ""; new
+        bootstrap.Modal(document.getElementById('resumeModal')).show();
+    }
+}
+
+function showDetails(id, title, company, location, experience, packageLpa, vacancies, skills, description, posted) {
+    document.getElementById("modalJobTitle").innerText = title;
+    document.getElementById("modalCompany").innerText = company;
+    document.getElementById("modalLocation").innerText = location;
+    document.getElementById("modalExperience").innerText = experience;
+    document.getElementById("modalPackage").innerText = packageLpa;
+    document.getElementById("modalVacancies").innerText = vacancies;
+    document.getElementById("modalSkills").innerText = skills;
+    document.getElementById("modalDescription").innerText = description;
+    document.getElementById("modalPostedDate").innerText = posted;
+
+    new bootstrap.Modal(document.getElementById('jobDetailsModal')).show();
+}
+</script>
 </body>
 </html>
