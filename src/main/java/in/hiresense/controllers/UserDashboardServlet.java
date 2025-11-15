@@ -52,6 +52,7 @@ public class UserDashboardServlet extends HttpServlet {
             if(resumeUploaded){
                 JSONObject obj = new JSONObject(logs.get(0).getJsonResult());
                 userSkills = AffindaAPI.extractSkills(obj.toString());
+                System.out.println(userSkills);
             }
             List<JobPojo> jobs = JobDao.getAllJobsForUserDashboard(
                     search,

@@ -10,6 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="css/style.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 <%@include file="includes/header.jsp" %>
@@ -135,17 +136,15 @@
                 <button
                         type="button"
                         class="btn btn-outline-primary btn-sm mt-2 small"
-                        data-bs-toggle="modal"
-                        data-bs-target="#uploadresume"
-                        onclick="openResumePopup(<%=job.getId()%>, <%=job.getScore()%>, '<%=job.getSkills().replace("'", "\\'")%>"
+                        onclick="openResumePopup(<%=job.getId()%>, <%=job.getScore()%>, '<%=job.getSkills().replace("'", "\\'")%>')"
                 >
                     Apply Now
                 </button>
                 <button
                         type="button"
                         class="btn btn-outline-secondary btn-sm mt-2 small"
-                        data-bs-toggle="modal"
-                        data-bs-target="#jobDetails"
+
+
                         onclick='showDetails(<%=job.getId()%>,"<%=job.getTitle().replace("\"", "&quot;")%>", " <%=job.getCompany().replace("\"", "&quot;")%>", "<%=job.getLocation().replace("\"", "&quot;")%>", "<%=job.getExperience().replace("\"", "&quot;")%>", "<%=job.getPackageLpa().replace("\"", "&quot;")%>", "<%=job.getVacancies()%>", "<%=job.getSkills().replace("\"", "&quot;")%>", "<%=job.getDescription().replace("\"", "&quot;")%>", "<%=new java.text.SimpleDateFormat("dd MMM yyyy").format(job.getCreatedAt())%>")'
                 >
                     View Details
@@ -261,7 +260,8 @@
     }
 %>
 function openResumePopup(jobId, score, skills) {
-    const resumeUploaded =<%=request.getAttribute("resumeUploaded")%>;
+    const resumeUploaded =<%=(boolean)request.getAttribute("resumeUploaded")%>;
+    <% System.out.println(resumeUploaded);%>
     if (resumeUploaded) {
         Swal.fire({ title: "Apply for this job?", icon:
                 "question", showCancelButton: true, confirmButtonText: "Yes, Apply",

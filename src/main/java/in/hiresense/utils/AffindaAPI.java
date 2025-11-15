@@ -165,16 +165,25 @@ public class AffindaAPI {
     public static int calculateMatchScore(String jobSkillsCsv, List<String> resumeSkills){
         if(resumeSkills == null || resumeSkills.isEmpty()) return 0;
 
-        String[] jobSkills = jobSkillsCsv.split(" ");
+        String[] jobSkills = jobSkillsCsv.split(",");
         Set<String> required = new HashSet<>();
         for(String s : jobSkills){
             required.add(s.trim().toLowerCase());
+            System.out.println(s);
+        }
+        int matched = 0;
+        System.out.println("my skills");
+        for(String r : required){
+            for (String s : resumeSkills) {
+                if (s.toLowerCase().contains(r.toLowerCase())) {
+                    matched ++;
+                    break;
+                }
+            }
+
         }
 
-        int matched = 0;
-        for(String r : resumeSkills){
-            if(required.contains(r.toLowerCase())) matched++;
-        }
+        System.out.println(matched);
 
         return (int) ((matched*100)/required.size());
     }

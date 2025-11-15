@@ -38,15 +38,18 @@ public class ApplyJobServlet extends HttpServlet {
             return;
         }
 
+        System.out.println("In Apply Job servlet");
+
         int userId = (Integer)session.getAttribute("userId");
         int jobId = Integer.parseInt(request.getParameter("jobId"));
         int score = Integer.parseInt(request.getParameter("score"));
         try{
             String resumePath = "N/A";
             List<ResumeAnalysisLogsPojo> logs = ResumeAnalysisLogDao.getLogsByUser(userId);
+            System.out.println(logs);
             if(!logs.isEmpty()){
                 String resultJson = logs.get(0).getJsonResult();
-                JSONObject obj = new JSONObject();
+                JSONObject obj = new JSONObject(resultJson);
                 JSONObject data = obj.getJSONObject("data");
                 resumePath = data.optString("resumePath","N/A");
             }
